@@ -1,0 +1,35 @@
+
+
+{ciudad}, {fecha}
+
+{nombre}
+{cargo}
+{entidad}
+
+Ciudad
+Referencia: Recurso de reposición
+
+Respetado señor/a:
+
+En atención a su respuesta a la solicitud del {fechaRadicacion}, mediante el cual solicité {resumenInicial}, me permito presentar recurso de reposición de acuerdo al artículo 27 de la ley 1712 de 2014. 
+
+La información solicitada es pública, ya que {argumentoInfoPublica}. 
+
+Por lo tanto, y en el ejercicio del derecho fundamental de petición consagrado en el artículo 23 de la Constitución Nacional y del derecho de acceso a la información pública, consagrado en los artículos 20 y 74 de la misma, desarrollado por la ley 1712 de 2014; de manera respetuosa le solicito de nuevo la siguiente información:
+
+{informacion}.
+
+En caso que la entidad decida volver a negar la información, solicito que se envíe la información al Tribunal de lo Contencioso Administrativo o a los Juzgados Administrativos de acuerdo al citado artículo 27 de la ley 1712 de 2014: 
+
+"Negado este recurso corresponderá al Tribunal administrativo con jurisdicción en el lugar donde se encuentren los documentos, si se trata de autoridades nacionales, departamentales o del Distrito Capital de Bogotá, o al juez administrativo si se trata de autoridades distritales y municipales, decidir en única instancia si se niega o se acepta, total o parcialmente, la petición formulada. Para ello, el funcionario respectivo enviará la documentación correspondiente al tribunal o al juez administrativo en un plazo no superior a tres (3) días (…)"
+
+Es importante recordar que el funcionario público debe, en virtud del cumplimiento de la ley, darle el trámite correspondiente al derecho de insistencia. De acuerdo con el artículo 79 de la ley 190 de 1995 "será causal de mala conducta el hecho de que un funcionario público obstaculice, retarde o niegue inmotivadamente el acceso de la ciudadanía, en general, y de los medios de comunicación, en particular, a los documentos que reposen en la dependencia a su cargo y cuya solicitud se haya presentado con el cumplimiento de los requisitos exigidos por la ley". 
+
+Se anexa a la presente copia de la solicitud radicada el {fechaRadicacion} y la respuesta dada por esta entidad el {fechaRespuesta}. La respuesta al presente recurso de reposición la recibiré en la {direccion}. 
+
+Agradezco de antemano su colaboración, Atentamente,
+
+
+___________________
+{nombre} {apellido}
+{identificacion}

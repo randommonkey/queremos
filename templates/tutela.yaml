@@ -1,0 +1,17 @@
+juezTribunal: 'Juez o Tribunal'
+ciudad: 
+entidad: 
+informacionBreve: 'Breve descripción de la información solicitada'
+fechaRadicacion: 'citar fecha del escrito o de radicación'
+fechaActual: ''
+fechaRespuesta: 'citar fecha de la respuesta'
+direccion: 'Dirección de correspondencia del solicitante. Puede incluir una dirección electrónica.'
+hechos:
+  noRespuesta: 'Que pasados diez días hábiles, no recibí respuesta alguna a mi solicitud de parte de la mencionada ENTIDAD.\n 3. Hasta la fecha, aproximadamente {diasHabilesDesdeRadicacion} hábiles después, no he recibido aún noticia o respuesta alguna por parte de la ENTIDAD.'
+  violaDerechos: 'recibí una respuesta por parte de la ENTIDAD la cual viola mi derecho fundamental a acceder a la información pública, ya que {razonViolacionDerechos}'
+fundamento: 'En esta parte se puede hacer referencia a los diferentes
+principios establecidos en el artículo 3 de la ley 1712 de
+2014 que se incumplen o si la entidad no cumplió con
+el requisito establecido en el artículo 28 de dicha ley tal y
+como se explica en el capítulo ¿Qué información pueden
+negar y cómo?'
