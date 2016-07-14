@@ -124,7 +124,12 @@ shinyUI(
       tabPanel("Dataset", formulario_dataset),
       tabPanel("Privacidad", restricciones_dataset),
       tabPanel("Clasificacion", clasificacion_dataset),
-      tabPanel("Otras restricciones", otras_restricciones)))
-  )
+      tabPanel("Otras restricciones", otras_restricciones),
+      tabPanel(submitButton("Generar Solicitud")))
+  ))
   
 ))
+
+
+
+
