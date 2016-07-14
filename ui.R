@@ -12,110 +12,98 @@ library(shiny)
 
 formulario_solicitante <- column(12, h3("Informacion sobre el solicitante del dataset"),
                                      
-                                     textInput("text", label = h4("Nombre"), 
+                                     textInput("solitante_nombre", label = h4("Nombre"), 
                                                value = "Enter text..."),
                                      
-                                     textInput("text", label = h4("Apellidos"), 
+                                     textInput("solicitante_apellidos", label = h4("Apellidos"), 
                                                value = "Enter text..."),
                                      
-                                     textInput("text", label = h4("Tipo Identificacion"), 
+                                     textInput("solicitante_tipo_identificacion", label = h4("Tipo Identificacion"), 
                                                value = "Enter text..."),
                                      
-                                     textInput("text", label = h4("Identificacion"), 
+                                     textInput("solicitante_identificacion", label = h4("Identificacion"), 
                                                value = "Enter text..."),
                                      
-                                     textInput("text", label = h4("Telefono"), 
+                                     textInput("solicitante_telefono", label = h4("Telefono"), 
                                                value = "Enter text..."),
                                      
-                                     textInput("text", label = h4("Email"), 
-                                               value = "Enter text..."),
-                                     
-                                     
-                                     actionButton("derecho","Crear"))
+                                     textInput("solicitante_email", label = h4("Email"), 
+                                               value = "Enter text...")
+                                 )
 
 formulario_institucion <- column(12, h3("Informacion sobre la institucion que administra el dataset"),
                                      
-                                     textInput("text", label = h4("Nombre de la Entidad"), 
+                                     textInput("entidad_nombre", label = h4("Nombre de la Entidad"), 
                                                value = "Enter text..."),
                                      
-                                     textInput("text", label = h4("Ciudad"), 
+                                     textInput("entidad_ciudad", label = h4("Ciudad"), 
                                                value = "Enter text..."),
                                      
-                                     textInput("text", label = h4("Direccion"), 
+                                     textInput("entidad_direccion", label = h4("Direccion"), 
                                                value = "Enter text...")
                                  )
 formulario_funcionario <- column(12, h3("Informacion sobre la institucion que administra el dataset"),
                                  
                                  # agregar opcion para permitir remitir el template a un funcionario anonimo 
                                  # en caso que el usuario no conozca el nombre del funcionario
-                                 textInput("text", label = h4("Nombre del funcionario encargado"), 
+                                 textInput("funcionario_nombre", label = h4("Nombre del funcionario encargado"), 
                                            value = "Enter text..."),
                                  
-                                 textInput("text", label = h4("Apellidos del funcionario encargado"), 
+                                 textInput("funcionario_apellido", label = h4("Apellidos del funcionario encargado"), 
                                            value = "Enter text..."),
                                  
-                                 textInput("text", label = h4("Cargo del Funcionario"), 
+                                 textInput("funcionario_cargo", label = h4("Cargo del Funcionario"), 
                                            value = "Enter text...")
                                  
                           )
 
-formulario_dataset <- column(12, h3("Informacion sobre la institucion que administra el dataset"),
-                                 
-                                 # agregar opcion para permitir remitir el template a un funcionario anonimo 
-                                 # en caso que el usuario no conozca el nombre del funcionario
-                                 textInput("text", label = h4("Nombre del funcionario encargado"), 
-                                           value = "Enter text..."),
-                                 
-                                 textInput("text", label = h4("Apellidos del funcionario encargado"), 
-                                           value = "Enter text..."),
-                                 
-                                 textInput("text", label = h4("Cargo del Funcionario"), 
-                                           value = "Enter text...")
-                                 
-)
 
-formulario_dataset <- column(12, h3("Informacion sobre la institucion que administra el dataset"),
+
+formulario_dataset <- column(12, h3("Informacion sobre el dataset"),
                              
                              # agregar opcion para permitir remitir el template a un funcionario anonimo 
                              # en caso que el usuario no conozca el nombre del funcionario
-                             textInput("text", label = h4("Descripcion del Dataset/datos/informacion a la que desea acceder"), 
+                             textInput("dataset_descripcion", label = h4("Descripcion del Dataset/datos/informacion a la que desea acceder"), 
                                        value = "Enter text..."),
                              
-                             textInput("text", label = h4("Especifique que campos en particular del dataset le son indispensables "), 
+                             textInput("dataset_campos", label = h4("Especifique que campos en particular del dataset le son indispensables "), 
                                        value = "Enter text..."),
                              
-                             textInput("text", label = h4("Especifique el rango preferible de tiempo del dataset que solicita"), 
-                                       value = "Enter text...")
+                             dateRangeInput('dataset_fecha',
+                                            label = h4("Especifique el rango preferible de tiempo del dataset que solicita"),
+                                            start = Sys.Date() - 2, end = Sys.Date() + 2
+                             )
+                             
                       )
 
 restricciones_dataset <- column(12, h3("Privacidad"),
                              
                         
-                             checkboxInput("checkbox", label = h4("El dataset podria contener campos que puedan vulnerar el derecho a la privacidad de terceros"), 
+                             checkboxInput("privacidad_violacion_flag", label = h4("El dataset podria contener campos que puedan vulnerar el derecho a la privacidad de terceros"), 
                                           value = FALSE),
                              
-                             textInput("text", label = h4("(en caso de si)Escriba cuales campos que podrian afectar la privacidad de 3eros no son indispensables para usted"), 
+                             textInput("campos_violan_privacidad", label = h4("(en caso de si)Escriba cuales campos que podrian afectar la privacidad de 3eros no son indispensables para usted"), 
                                        value = "Enter text...")
 )
 
 clasificacion_dataset <- column(12, h3("Clasificacion"),
                                 
                               
-                                checkboxInput("checkbox", label = h4("El dataset contiene datos amparados como `informacion clasificada`? "), 
+                                checkboxInput("clasificacion_flag", label = h4("El dataset contiene datos amparados como `informacion clasificada`? "), 
                                               value = FALSE),
-                                checkboxInput("checkbox", label = h4("Ha pasado mas de 30anos desde su clasificacion?"), 
+                                checkboxInput("clasificacion_expiracion_flag", label = h4("Ha pasado mas de 30anos desde su clasificacion?"), 
                                               value = FALSE)
                         )
 
 otras_restricciones <- column(12, h3("El dataset contiene:"),
                    
-                              checkboxInput("checkbox", label = h4("datos acerca de secretos industriales ? "), 
+                              checkboxInput("restriccion_secreto_industrial_flag", label = h4("datos acerca de secretos industriales ? "), 
                                             value = FALSE),
-                              checkboxInput("checkbox", label = h4("datos acerca de secretos de seguridad nacional?"), 
+                              checkboxInput("restriccion_seguridad_nacional_flag", label = h4("datos acerca de secretos de seguridad nacional?"), 
                                             value = FALSE),
-                              checkboxInput("checkbox", label = h4("datos acerca de secretos de relaciones internacionles?"), 
+                              checkboxInput("restriccion_relaciones_internacionales_flag", label = h4("datos acerca de secretos de relaciones internacionles?"), 
                                             value = FALSE),
-                              checkboxInput("checkbox", label = h4("datos resultantes de investigaciones judiciales en desarrollo"), 
+                              checkboxInput("restriccion_investigacion_judicial", label = h4("datos resultantes de investigaciones judiciales en desarrollo"), 
                                             value = FALSE)
 )
 
