@@ -1,0 +1,17 @@
+---
+params:
+output:
+  pdf_document:
+    template: default.tex
+    keep_tex: true
+ciudad: "`r params$ciudad`"
+fecha: "`r params$fecha`"
+nombres: "`r params$nombres`"
+cargo: "`r params$cargo`"
+entidad: "`r params$entidad`"
+ciudadDat: "`r params$ciudadDat`"
+info: "`r params$info`"
+direc: "`r params$direc`"
+correo: "`r params$correo`"
+documento: "`r params$documento`"
+---
