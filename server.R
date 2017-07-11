@@ -1,68 +1,10 @@
 library(shiny)
 library(shinyjs)
 library(tidyverse)
-library(shinysteps)
 library(bsplus)
-library(pystr)
 
-server <- function(input,output,session){
-
+shinyServer(function(input, output, session){
   
-  output$info_gen <- renderUI({
-    info <- list(
-                      textInput("sol_nombre", label = "Nombre", value = ""),
-                      textInput("sol_apellidos", label = "Apellidos",value = ""),
-                      textInput("sol_cargo", label = "Cargo",value = ""),
-                      #fluidRow(
-                     div(class = "row",
-                         div(class = "app-button",
-                      selectizeInput("sol_tipo_id", label = "Doc.", 
-                                      c("T.I", "C.C", "C.E", "NIT."), width = "62px")
-                        ),
-                      div(class = "app-button",
-                      textInput("sol_idNum", label = "N. de identidad", 
-                                                    value = "", width = "234px")
-                        )),
-                     
-                     textInput("sol_direccion", label = "Dirección"),
-                     # textInput("sol_tel", label = "Telefono"),
-                     textInput("sol_email", label = "Email")
-                                )
-  info
-    
-  }) 
-  
-
-  output$info_inst <- renderUI({
-    info <- list(
-      
-                     textInput("ent_ciudad", label = "Ciudad"),
-                     textInput("ent_nombre", label = "Nombre de la Entidad")
-                     
-                     )
-    
-    info                                                                
-    })
-  
-  
-  output$info_data <- renderUI({
-    info <- list(
-                     textInput('data_ciudad', 'Ciudad de la cual realiza la consulta'),
-    
-                     textInput('data_int', 'Descripción de la información que desea obtener'),
-    
-                     checkboxInput('info_reserva', 'La información solicitada es clasificada o de reserva')
-    )
-    info
-  })
-  
-  
- 
-  output$val_num <- renderText({ input$sol_idNum})
-  output$val_tel <- renderText({ input$sol_tel})
-  output$val_eml <- renderText({ input$sol_email})
-  
-
   output$nombre <- renderText({
     paste(input$sol_nombre, input$sol_apellidos)
   })
@@ -71,40 +13,64 @@ server <- function(input,output,session){
     input$ent_nombre
   })
   
+  tipDoc <- reactive({
+    td <- input$sol_tipo_id
+    ifelse(td == "Tarjeta de identidad", "T.I",
+           ifelse(td == "Cedula de ciudadania", "C.C", "C.E"))
+  })
+  
+  
+  fecha <- reactive({
+    a <- separate(data.frame(fecha = Sys.Date()), fecha, c("Año", "Mes", "Día"))
+    a$mes_d <- ifelse(a$Mes == "01", "Enero",
+                      ifelse(a$Mes == "02", "Febrero",
+                             ifelse(a$Mes == "03", "Marzo", 
+                                    ifelse(a$Mes == "04", "Abril",
+                                           ifelse(a$Mes == "05", "Mayo",
+                                                  ifelse(a$Mes == "06", "Junio",
+                                                         ifelse(a$Mes == "07", "Julio",
+                                                                ifelse(a$Mes == "08", "Agosto",
+                                                                       ifelse(a$Mes == "09", "Septiembre",
+                                                                              ifelse(a$Mes == "10", "Octubre",
+                                                                                     ifelse(a$Mes == "11", "Noviembre", "Diciembre")))))))))))
+    a$fecha <- paste0(a$Día, " de ", a$mes_d, " del ", a$Año)
+    a$fecha
+  })
+  
   template <- reactive({
-   
+    
     templ <- list(
       fluidRow(
         div(id = "headsty",
-          HTML(
-            paste0(input$data_ciudad, ", ", 'fecha', '</br></br>',
-                   textOutput('nombre'), input$sol_cargo, textOutput('entidad'), input$ent_ciudad,
-                  '</br></br>', 'Referencia: Solicitud de información </br> Respetado señor/a: </br></br> 
-                 <p style="text-align: justify;"> En ejercicio del derecho fundamental de petición, consagrado en el artículo 23 de la 
-                  Constitución Nacional, y del derecho de acceso a la información pública, consagrado en los artículos 20 y 74 de la misma, desarrollado por 
-                  la ley 1712 de 2014; de manera respetuosa le solicito la siguiente información:</p></br>',
-                   '<p style="text-align: justify;">',input$data_int, '</p>',
-                   '<p style="text-align: justify;"> La respuesta a la presente solicitud la recibiré en la ', input$sol_direccion,'o en mi correo electrónico', 
-                   input$sol_email, '.</p>', '<p> Cordialmente, </p> </br>','
-                  <div class="firmLine">', paste(input$sol_nombre, input$sol_apellidos), '
-                  </div>
-                  <p>', paste0(input$sol_tipo_id, " ",input$sol_idNum) ,'</p>
-                  '
-                  
+            HTML(
+              paste0(input$data_ciudad, ", ", fecha(), '</br></br>',
+                     textOutput('nombre'), input$sol_cargo, textOutput('entidad'), input$ent_ciudad,
+                     '</br></br>', 'Referencia: Solicitud de información </br> Respetado señor/a: </br></br> 
+                     <p style="text-align: justify;"> En ejercicio del derecho fundamental de petición, consagrado en el artículo 23 de la 
+                     Constitución Nacional, y del derecho de acceso a la información pública, consagrado en los artículos 20 y 74 de la misma, desarrollado por 
+                     la ley 1712 de 2014; de manera respetuosa le solicito la siguiente información:</p></br>',
+                     '<p style="text-align: justify;">',input$data_int, '</p>',
+                     '<p style="text-align: justify;"> La respuesta a la presente solicitud la recibiré en la ', input$sol_direccion,'o en mi correo electrónico', 
+                     input$sol_email, '.</p>', '<p> Cordialmente, </p> </br>','
+                     <div class="firmLine">', paste(input$sol_nombre, input$sol_apellidos), '
+                     </div>
+                     <p>', paste0(tipDoc(), " ",input$sol_idNum) ,'</p>
+                     '
+                     
+              )
+            ),
+            div(align = 'center',
+                downloadButton('descarga_pet', 'Descargar PDF')  
+                
             )
-          ),
-          div(align = 'center',
-              downloadButton('descarga_pet', 'Descargar PDF')  
-              
-          )
+            )
+            )
       )
-    )
-    )
     
     templ
     
     
-    })
+  })
   
   
   
@@ -126,7 +92,7 @@ server <- function(input,output,session){
         {
           params <- list(
             ciudad = input$data_ciudad,
-            fecha = '16 de septiembre 2341',
+            fecha = fecha(),
             nombres = paste(input$sol_nombre, input$sol_apellidos),
             cargo = input$sol_cargo,
             entidad = input$ent_nombre,
@@ -134,7 +100,7 @@ server <- function(input,output,session){
             info = input$data_int,
             direc = input$sol_direccion,
             correo = input$sol_email,
-            documento = paste0(input$sol_tipo_id, " ",input$sol_idNum))
+            documento = paste0(tipDoc(), " ",input$sol_idNum))
           rmarkdown::render("temp_latex/untitle.Rmd",
                             #output_format = pdf_document(template="default.tex"),
                             params = params,
@@ -150,8 +116,25 @@ server <- function(input,output,session){
   
   
   
+
   
+  observeEvent(input$nextOne, {
+    updateTabsetPanel(session, "Info", "Información de la entidad")
+  })
 
-}
+  
+  observeEvent(input$nextTwo, {
+    updateTabsetPanel(session, "Info", "Información Personal")
+  })
 
-
+  
+  observeEvent(input$nextThree, {
+    updateTabsetPanel(session, "Info", "Información de los datos")
+  })
+  
+  observeEvent(input$nextFour, {
+    updateTabsetPanel(session, "Info", "Información de la entidad")
+  })
+  
+  
+})
